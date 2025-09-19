@@ -1,9 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { MailerSend, EmailParams, Recipient } from "mailersend";
+import sgMail from "@sendgrid/mail";
 
-const mailersend = new MailerSend({
-  apiKey: process.env.MAILERSEND_API_KEY || "",
-});
+sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
 
 const FACCHINI_COLOR = "#F5B301";
 
@@ -19,7 +17,7 @@ export default async function handler(
     return res.status(200).end();
   }
 
-  const API_KEY = process.env.CONTACT_API_KEY;
+  const API_KEY = process.env.CONTACT_API_KEY || "";
   const clientKey = req.headers["x-api-key"];
   if (!clientKey || clientKey !== API_KEY) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -33,13 +31,8 @@ export default async function handler(
     return res.status(400).json({ error: "Campos obrigatórios ausentes." });
   }
 
-  const to = [{ email: "gutofm10@gmail.com", name: "Facchini Lead" }];
-  if (isArchitect) {
-    to.push({
-      email: "gustavomartins.developer@gmail.com",
-      name: "Facchini Arquiteto",
-    });
-  }
+  const to = ["gutofm10@gmail.com"];
+  const cc = isArchitect ? ["gustavomartins.developer@gmail.com"] : [];
 
   const html = `
     <div style="background: #111; color: #fff; font-family: Arial, sans-serif; border-radius: 12px; padding: 32px; max-width: 500px; margin: auto;">
@@ -56,19 +49,20 @@ export default async function handler(
     </div>
   `;
 
-  const emailParams = new EmailParams()
-    .setFrom({
-      email: "no-reply@facchiniengenharia.com.br",
-      name: "Facchini Site",
-    })
-    .setTo(to)
-    .setSubject("Novo contato recebido pelo site")
-    .setHtml(html);
-
   try {
-    await mailersend.email.send(emailParams);
+    await sgMail.send({
+      from: "gutofm10@gmail.com", // Use um e-mail verificado no SendGrid
+      to,
+      cc,
+      subject: "Novo contato recebido pelo site",
+      html,
+    });
     return res.status(200).json({ success: true });
-  } catch (error) {
-    return res.status(500).json({ error: "Falha ao enviar e-mail." });
+  } catch (error: any) {
+    console.error("SendGrid error:", error);
+    return res.status(500).json({
+      error: error?.message || "Falha ao enviar e-mail.",
+      details: error,
+    });
   }
 }
