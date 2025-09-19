@@ -11,6 +11,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, x-api-key");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   const API_KEY = process.env.CONTACT_API_KEY;
   const clientKey = req.headers["x-api-key"];
   if (!clientKey || clientKey !== API_KEY) {
