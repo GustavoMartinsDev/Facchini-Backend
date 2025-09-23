@@ -31,10 +31,12 @@ export default async function handler(
     return res.status(400).json({ error: "Campos obrigatórios ausentes." });
   }
 
-  const to = ["gutofm10@gmail.com"];
-  const cc = isArchitect
-    ? ["gustavomartins.developer@gmail.com", "g.hildebrand@w2gcreative.com.br"]
-    : ["g.hildebrand@w2gcreative.com.br"];
+  const to = ["g.hildebrand@w2gcreative.com.br"];
+  const cc = ["gutofm10@gmail.com"];
+
+  if (isArchitect) {
+    cc.push("gustavomartins.developer@gmail.com");
+  }
 
   const html = `
     <div style="background: #111; color: #fff; font-family: Arial, sans-serif; border-radius: 12px; padding: 32px; max-width: 500px; margin: auto;">
