@@ -41,11 +41,11 @@ export default async function handler(
   const html = `
     <div style="background: #111; color: #fff; font-family: Arial, sans-serif; border-radius: 12px; padding: 32px; max-width: 500px; margin: auto;">
       <h2 style="color: ${FACCHINI_COLOR}; margin-bottom: 24px;">Novo contato Facchini</h2>
-      <p><strong>Nome:</strong> ${name}</p>
-      <p><strong>Telefone:</strong> ${phone}</p>
-      <p><strong>E-mail:</strong> ${email}</p>
-      <p><strong>Mensagem:</strong><br/>${message}</p>
-      <p><strong>Tipo de lead:</strong> ${
+      <p style="background: #111; color: #fff;"><strong style="background: #111; color: #fff;">Nome:</strong> ${name}</p>
+      <p style="background: #111; color: #fff;"><strong style="background: #111; color: #fff;">Telefone:</strong> ${phone}</p>
+      <p style="background: #111; color: #fff;"><strong style="background: #111; color: #fff;">E-mail:</strong> ${email}</p>
+      <p style="background: #111; color: #fff;"><strong style="background: #111; color: #fff;">Mensagem:</strong><br/>${message}</p>
+      <p style="background: #111; color: #fff;"><strong style="background: #111; color: #fff;">Tipo de lead:</strong> ${
         isArchitect ? "Arquiteto(a)" : "Cliente"
       }</p>
       <hr style="border-color: ${FACCHINI_COLOR}; margin: 24px 0;" />
