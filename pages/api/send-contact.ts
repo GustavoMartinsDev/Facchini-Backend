@@ -51,7 +51,7 @@ export default async function handler(
 
   try {
     await sgMail.send({
-      from: "gutofm10@gmail.com", // Use um e-mail verificado no SendGrid
+      from: "contato@gustavomartinsdeveloper.com.br",
       to,
       cc,
       subject: "Novo contato recebido pelo site",
