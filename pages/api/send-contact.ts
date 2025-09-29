@@ -55,7 +55,7 @@ export default async function handler(
 
   try {
     await sgMail.send({
-      from: "contato@gustavomartinsdeveloper.com.br",
+      from: "contato@facchiniengenharia.com.br",
       to,
       cc,
       subject: "Novo contato recebido pelo site",
